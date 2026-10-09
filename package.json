@@ -1,0 +1,30 @@
+{
+  "name": "megabit-exchange",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Peer-to-peer exchange for fictional internet-transfer units (megabits), priced from a global transfer index. Paid accounts via Revolut, virtual trading funds.",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "NODE_ENV=development node --watch server/index.js",
+    "test": "node --test --test-concurrency=1",
+    "build:demo": "node scripts/build-demo.js",
+    "admin": "node scripts/admin.js",
+    "revolut:webhook": "node scripts/revolut-webhook.js"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "5.3.0",
+    "@fontsource-variable/azeret-mono": "5.3.0",
+    "@fontsource-variable/schibsted-grotesk": "5.3.0",
+    "better-sqlite3": "12.4.1",
+    "compression": "1.8.1",
+    "express": "5.1.0",
+    "fast-xml-parser": "5.2.5",
+    "ws": "8.18.3"
+  }
+}

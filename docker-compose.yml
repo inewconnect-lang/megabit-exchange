@@ -1,0 +1,39 @@
+# Megabit Exchange + Caddy (automatic HTTPS from Let's Encrypt).
+# 1. Point your domain's DNS A/AAAA record at this server.
+# 2. cp .env.example .env and set DOMAIN and PUBLIC_URL.
+# 3. docker compose up -d --build
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_PATH: /app/data/megabit.db
+      TRUST_PROXY: "true"
+      HOST: 0.0.0.0
+      PORT: "3000"
+    volumes:
+      - mbx-data:/app/data
+    expose:
+      - "3000"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  mbx-data:
+  caddy-data:
+  caddy-config:
